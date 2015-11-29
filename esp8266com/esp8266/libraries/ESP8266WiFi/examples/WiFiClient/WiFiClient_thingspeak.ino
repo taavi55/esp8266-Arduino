@@ -1,19 +1,19 @@
 /*
- *  This sketch sends data via HTTP GET requests to data.sparkfun.com service.
+ *  This sketch sends data via HTTP GET requests to thingspeak service.
  *
- *  You need to get streamId and privateKey at data.sparkfun.com and paste them
+ *  You need to get api key at thingspeak and paste them
  *  below. Or just customize this script to talk to other HTTP servers.
  *
  */
 
 #include <ESP8266WiFi.h>
 
-const char* ssid     = "your-ssid";
-const char* password = "your-password";
+const char* ssid     = "YourSSID";
+const char* password = "Password";
 
-const char* host = "data.sparkfun.com";
-const char* streamId   = "....................";
-const char* privateKey = "....................";
+const char* host = "184.106.153.149";
+//const char* streamId   = "....................";
+const char* privateKey = "YourWriteApiKey";
 
 void setup() {
   Serial.begin(115200);
@@ -39,10 +39,10 @@ void setup() {
   Serial.println(WiFi.localIP());
 }
 
-int value = 0;
+int value = 7;
 
 void loop() {
-  delay(5000);
+  delay(15000);
   ++value;
 
   Serial.print("connecting to ");
@@ -57,11 +57,11 @@ void loop() {
   }
   
   // We now create a URI for the request
-  String url = "/input/";
-  url += streamId;
-  url += "?private_key=";
+  String url = "/update";
+//  url += streamId;
+  url += "?key=";
   url += privateKey;
-  url += "&value=";
+  url += "&field1=";
   url += value;
   
   Serial.print("Requesting URL: ");
@@ -82,4 +82,3 @@ void loop() {
   Serial.println();
   Serial.println("closing connection");
 }
-
